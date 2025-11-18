@@ -43,11 +43,11 @@ public class LivroServiceTest {
 
         when(livroRepository.save(LivroData.livroComQuantidadeTotalIgualAUm)).thenReturn(LivroData.livroComQuantidadeTotalIgualAUm);
 
-        Livro resultado = livroService.cadastrarLivro(LivroData.livroValido);
+        Livro resultado = livroService.cadastrarLivro(LivroData.livroComQuantidadeTotalIgualAUm);
 
-        assertEquals(LivroData.livroValido, resultado);
-        assertEquals(LivroData.livroValido.getQuantidadeTotal(), resultado.getQuantidadeTotal());
-        assertEquals(LivroData.livroValido.getQuantidadeTotal(), resultado.getQuantidadeDisponivel());
+        assertEquals(LivroData.livroComQuantidadeTotalIgualAUm, resultado);
+        assertEquals(LivroData.livroComQuantidadeTotalIgualAUm.getQuantidadeTotal(), resultado.getQuantidadeTotal());
+        assertEquals(LivroData.livroComQuantidadeTotalIgualAUm.getQuantidadeTotal(), resultado.getQuantidadeDisponivel());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class LivroServiceTest {
             livroService.cadastrarLivro(LivroData.livroComQuantidadeNegativa);
         });
 
-        assertEquals("A quantidade total de livros não pode ser negativa.", ex.getMessage());
+        assertEquals("A quantidade total de livros deve ser maior que zero.", ex.getMessage());
     }
 
     @Test
