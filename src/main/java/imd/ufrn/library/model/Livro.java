@@ -24,12 +24,12 @@ public class Livro {
     public Livro() {
     }
 
-    public Livro(Long id, String titulo, String autor, Integer quantidadeTotal, Integer quantidadeDisponivel) {
+    public Livro(Long id, String titulo, String autor, Integer quantidadeTotal) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
         this.quantidadeTotal = quantidadeTotal;
-        this.quantidadeDisponivel = quantidadeDisponivel;
+        this.quantidadeDisponivel = quantidadeTotal;
     }
 
     public Long getId() {

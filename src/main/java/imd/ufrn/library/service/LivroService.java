@@ -14,7 +14,7 @@ public class LivroService {
         this.livroRepository = livroRepository;
     }
 
-    public void cadastrarLivros(Livro livro) {
-
+    public Livro cadastrarLivro(Livro livro) {
+        return null;
     }
 }
