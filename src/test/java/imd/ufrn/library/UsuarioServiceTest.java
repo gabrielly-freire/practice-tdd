@@ -29,7 +29,11 @@ public class UsuarioServiceTest {
     @Test
     @DisplayName("Deve cadastrar um usuário com sucesso")
     public void deveCadastrarUsuarioComSucesso() {
+
+        when(usuarioRepository.save(UsuarioData.joaoSilvaEmailValido)).thenReturn(UsuarioData.joaoSilvaEmailValido);
+
         Usuario resultado = usuarioService.cadastrarUsuario(UsuarioData.joaoSilvaEmailValido);
+
 
         assertEquals(UsuarioData.joaoSilvaEmailValido, resultado);
     }
