@@ -1,6 +1,10 @@
 # Biblioteca — TDD
 
-Projeto de biblioteca: cadastro de livros e usuários e empréstimo de livros.
+Este projeto implementa um sistema simples de gerenciamento de biblioteca, com funcionalidades de cadastro de livros e usuários, além de empréstimo e devolução de livros.
+
+O principal objetivo é praticar o desenvolvimento orientado por testes (TDD — Test Driven Development), aplicando boas práticas de design, validações de regras de negócio e escrita de testes unitários com foco na qualidade do código.
+
+A proposta é construir a aplicação a partir dos testes, escrevendo primeiro o teste que representa uma regra de negócio, e só depois a implementação mínima para fazê-lo passar, seguindo o ciclo Red → Green → Refactor.
 
 ## Regras de negócio
 
@@ -19,6 +23,5 @@ Projeto de biblioteca: cadastro de livros e usuários e empréstimo de livros.
 - Ao emprestar: diminui `quantidadeDisponivel`, cria registro de empréstimo ativo.
 
 ### Devolução
-Regras:
 - Não pode devolver se: empréstimo já estiver devolvido.
 - Ao devolver: altera status para DEVOLVIDO; preenche `dataDevolucao`; aumenta `quantidadeDisponivel` do livro.
