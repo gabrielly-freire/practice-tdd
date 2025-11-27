@@ -1,38 +1,42 @@
 package imd.ufrn.library.service;
 
+import imd.ufrn.library.dto.UsuarioRequest;
+import imd.ufrn.library.dto.UsuarioResponse;
 import imd.ufrn.library.exception.NegocioException;
-import imd.ufrn.library.exception.ValidacaoException;
+import imd.ufrn.library.exception.RecursoNaoEncontradoException;
+import imd.ufrn.library.mapper.UsuarioMapper;
 import imd.ufrn.library.model.Usuario;
 import imd.ufrn.library.repository.UsuarioRepository;
-import jakarta.validation.ValidationException;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioMapper usuarioMapper;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, UsuarioMapper usuarioMapper) {
         this.usuarioRepository = usuarioRepository;
+        this.usuarioMapper = usuarioMapper;
     }
 
-    public Usuario cadastrarUsuario(Usuario usuario) {
-        if (usuarioRepository.existsUsuarioByEmail(usuario.getEmail())) {
-            throw new NegocioException("Já existe um usuário cadastrado com o email: " + usuario.getEmail());
+    public UsuarioResponse cadastrarUsuario(UsuarioRequest request) {
+        if (usuarioRepository.existsUsuarioByEmail(request.email())) {
+            throw new NegocioException("Já existe um usuário cadastrado com o email: " + request.email());
         }
+        Usuario usuario = usuarioMapper.fromRequest(request);
+        return usuarioMapper.toResponse(usuarioRepository.save(usuario));
+    }
 
-        if (usuario.getNome() == null || usuario.getNome().trim().isEmpty()) {
-            throw new ValidationException("O nome do usuário não pode ser vazio.");
-        }
+    public List<UsuarioResponse> listar() {
+        return usuarioMapper.toResponseList(usuarioRepository.findAll());
+    }
 
-        if (usuario.getEmail() == null || usuario.getEmail().trim().isEmpty()) {
-            throw new ValidationException("O email do usuário não pode ser vazio.");
-        }
-
-        if (usuario.getEmail() != null && !usuario.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            throw new ValidationException("O email do usuário é inválido.");
-        }
-
-        return usuarioRepository.save(usuario);
+    public UsuarioResponse buscarPorId(Long id) {
+        return usuarioMapper.toResponse(usuarioRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado.")));
     }
 }
